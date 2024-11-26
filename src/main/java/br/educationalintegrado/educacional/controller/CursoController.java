@@ -2,6 +2,7 @@ package br.educationalintegrado.educacional.controller;
 
 
 import br.educationalintegrado.educacional.dto.CursoRequestDTO;
+import br.educationalintegrado.educacional.dto.TurmaRequestDTO;
 import br.educationalintegrado.educacional.model.Curso;
 import br.educationalintegrado.educacional.model.Turma;
 import br.educationalintegrado.educacional.repository.CursoRepository;
@@ -48,22 +49,12 @@ public class CursoController {
         return ResponseEntity.ok(this.repository.save(curso));
     }
 
-    @PostMapping("/{id}/add-turma")
-    public ResponseEntity<Curso> addTurma(@PathVariable Integer id,
-                                          @RequestBody Turma turma) {
-        Curso curso = this.repository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Curso não encontrado"));
 
-        turma.setCurso(curso);
-        this.turmaRepository.save(turma);
-
-        return ResponseEntity.ok(curso);
-    }
 
     @PutMapping("/{id}")
     public ResponseEntity<Curso> update(@PathVariable Integer id, @RequestBody CursoRequestDTO dto){
         Curso curso = this.repository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Aluno não encontrado"));
+                .orElseThrow(() -> new IllegalArgumentException("Curso não encontrado"));
 
         curso.setNome(dto.nome());
         curso.setCodigo(dto.codigo());
@@ -76,7 +67,7 @@ public class CursoController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id){
         Curso curso = this.repository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Aluno não encontrado"));
+                .orElseThrow(() -> new IllegalArgumentException("Curso não encontrado"));
 
         this.repository.delete(curso);
         return ResponseEntity.noContent().build();

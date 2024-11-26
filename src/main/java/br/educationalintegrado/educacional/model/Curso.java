@@ -26,6 +26,9 @@ public class Curso {
     @JsonIgnoreProperties("curso")
     private List<Turma> turmas;
 
+    @OneToMany(mappedBy = "curso", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Disciplina> disciplinas;
+
     public Integer getId() {
         return id;
     }
@@ -64,5 +67,13 @@ public class Curso {
 
     public void setTurmas(List<Turma> turmas) {
         this.turmas = turmas;
+    }
+
+    public List<Disciplina> getDisciplinas() {
+        return disciplinas;
+    }
+
+    public void setDisciplinas(List<Disciplina> disciplinas) {
+        this.disciplinas = disciplinas;
     }
 }
