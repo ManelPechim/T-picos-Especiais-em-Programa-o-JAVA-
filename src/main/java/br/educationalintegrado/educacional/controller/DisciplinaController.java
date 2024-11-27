@@ -1,5 +1,6 @@
 package br.educationalintegrado.educacional.controller;
 
+import br.educationalintegrado.educacional.dto.CursoRequestDTO;
 import br.educationalintegrado.educacional.dto.DisciplinaRequestDTO;
 import br.educationalintegrado.educacional.dto.TurmaRequestDTO;
 import br.educationalintegrado.educacional.model.Curso;
@@ -41,14 +42,35 @@ public class DisciplinaController {
     }
 
     @PostMapping
-    public  ResponseEntity<Disciplina> addDisciplina(@RequestBody DisciplinaRequestDTO dto){
-
+    public ResponseEntity<Disciplina> save(@RequestBody DisciplinaRequestDTO dto){
         Disciplina disciplina = new Disciplina();
+
         disciplina.setNome(dto.nome());
         disciplina.setCodigo(dto.codigo());
 
         return ResponseEntity.ok(this.repository.save(disciplina));
+    }
 
+//    , Integer cursoId, Integer professorId
+    @PostMapping("/{cursoId}/add-disciplina-in-curso")
+    public ResponseEntity<Curso> addCurso(@PathVariable Integer cursoId, @RequestBody DisciplinaRequestDTO dto, Integer professorId){
+
+        Curso curso = this.cursoRepository.findById(cursoId)
+                .orElseThrow(() -> new IllegalArgumentException("Curso não encontrado"));
+
+        Professor professor = this.professorRepository.findById(professorId)
+                .orElseThrow(() -> new IllegalArgumentException("Professor não encontrado"));
+
+        Disciplina disciplina = new Disciplina();
+
+        disciplina.setNome(dto.nome());
+        disciplina.setCodigo(dto.codigo());
+
+        disciplina.setCurso(curso);
+        disciplina.setProfessor(professor);
+
+        this.repository.save(disciplina);
+        return ResponseEntity.ok(curso);
     }
 
     @PutMapping("/{id}")
