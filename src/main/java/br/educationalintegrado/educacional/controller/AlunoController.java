@@ -2,12 +2,9 @@ package br.educationalintegrado.educacional.controller;
 
 
 import br.educationalintegrado.educacional.dto.AlunoRequestDTO;
-import br.educationalintegrado.educacional.model.Aluno;
-import br.educationalintegrado.educacional.model.Matricula;
-import br.educationalintegrado.educacional.model.Turma;
-import br.educationalintegrado.educacional.repository.AlunoRepository;
-import br.educationalintegrado.educacional.repository.MatriculaRepository;
-import br.educationalintegrado.educacional.repository.TurmaRepository;
+import br.educationalintegrado.educacional.dto.NotaRequestDTO;
+import br.educationalintegrado.educacional.model.*;
+import br.educationalintegrado.educacional.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +23,12 @@ public class AlunoController {
 
     @Autowired
     private MatriculaRepository matriculaRepository;
+
+    @Autowired
+    private DisciplinaRepository disciplinaRepository;
+
+    @Autowired
+    private NotaRepository notaRepository;
 
     @GetMapping
     public ResponseEntity<List<Aluno>> findAll(){
@@ -47,7 +50,7 @@ public class AlunoController {
         Aluno aluno = new Aluno();
         aluno.setNome(dto.nome());
         aluno.setEmail(dto.email());
-        aluno.setMatriculaCod(dto.matricula());
+        aluno.setMatriculaCod(dto.matriculaCod());
         aluno.setData_nascimento(dto.data_nascimento());
 
 //        return this.repository.save(aluno);
@@ -68,7 +71,28 @@ public class AlunoController {
         matricula.setAluno(aluno);
         matricula.setTurma(turma);
 
-        return  ResponseEntity.ok(this.matriculaRepository.save(matricula));
+        return ResponseEntity.ok(this.matriculaRepository.save(matricula));
+    }
+
+    @PostMapping("/{matriculaId}/{disciplinaId}/add-nota")
+    public ResponseEntity<Nota> addNota(@PathVariable Integer matriculaId,
+                                        @PathVariable Integer disciplinaId,
+                                        @RequestBody NotaRequestDTO dto){
+        Matricula matricula = this.matriculaRepository.findById(matriculaId)
+                .orElseThrow(() -> new IllegalArgumentException("Matricula não encontrada"));
+
+        Disciplina disciplina = this.disciplinaRepository.findById(disciplinaId)
+                .orElseThrow(() -> new IllegalArgumentException("Disciplina não encontrada"));
+
+        Nota nota = new Nota();
+
+        nota.setNota(dto.nota());
+        nota.setDataLancamento(dto.dataLancamento());
+
+        nota.setMatricula(matricula);
+        nota.setDisciplina(disciplina);
+
+        return ResponseEntity.ok(this.notaRepository.save(nota));
     }
 
     @PutMapping("/{id}")
@@ -78,7 +102,7 @@ public class AlunoController {
 
         aluno.setNome(dto.nome());
         aluno.setEmail(dto.email());
-        aluno.setMatriculaCod(  dto.matricula());
+        aluno.setMatriculaCod(dto.matriculaCod());
         aluno.setData_nascimento(dto.data_nascimento());
 
 //        return this.repository.save(aluno);

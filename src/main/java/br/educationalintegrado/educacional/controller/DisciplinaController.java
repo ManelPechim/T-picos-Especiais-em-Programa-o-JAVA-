@@ -2,14 +2,10 @@ package br.educationalintegrado.educacional.controller;
 
 import br.educationalintegrado.educacional.dto.CursoRequestDTO;
 import br.educationalintegrado.educacional.dto.DisciplinaRequestDTO;
+import br.educationalintegrado.educacional.dto.NotaRequestDTO;
 import br.educationalintegrado.educacional.dto.TurmaRequestDTO;
-import br.educationalintegrado.educacional.model.Curso;
-import br.educationalintegrado.educacional.model.Disciplina;
-import br.educationalintegrado.educacional.model.Professor;
-import br.educationalintegrado.educacional.model.Turma;
-import br.educationalintegrado.educacional.repository.CursoRepository;
-import br.educationalintegrado.educacional.repository.DisciplinaRepository;
-import br.educationalintegrado.educacional.repository.ProfessorRepository;
+import br.educationalintegrado.educacional.model.*;
+import br.educationalintegrado.educacional.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

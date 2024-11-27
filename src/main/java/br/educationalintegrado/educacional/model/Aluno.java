@@ -58,7 +58,7 @@ public class Aluno {
         return matriculaCod;
     }
 
-    public void setMatriculaCod(String matricula) {
+    public void setMatriculaCod(String matriculaCod) {
         this.matriculaCod = matriculaCod;
     }
 

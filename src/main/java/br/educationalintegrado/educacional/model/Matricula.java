@@ -1,6 +1,9 @@
 package br.educationalintegrado.educacional.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "matriculas")
@@ -41,4 +44,5 @@ public class Matricula {
     public void setTurma(Turma turma) {
         this.turma = turma;
     }
+
 }

@@ -3,6 +3,8 @@ package br.educationalintegrado.educacional.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "turmas")
 public class Turma {
@@ -19,7 +21,6 @@ public class Turma {
 
     @ManyToOne
     @JoinColumn(name = "curso_id", referencedColumnName = "id")
-    @JsonIgnoreProperties("turmas")
     private Curso curso;
 
     public Integer getId() {
@@ -53,4 +54,5 @@ public class Turma {
     public void setCurso(Curso curso) {
         this.curso = curso;
     }
+
 }

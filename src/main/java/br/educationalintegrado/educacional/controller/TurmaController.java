@@ -33,9 +33,9 @@ public class TurmaController {
         return ResponseEntity.ok(turma);
     }
 
-    @PostMapping("/{id}/add-turma-in-curso")
-    public ResponseEntity<Curso> addTurma(@PathVariable Integer id, @RequestBody TurmaRequestDTO dto){
-        Curso curso = this.cursoRepository.findById(id)
+    @PostMapping("/{cursoId}/add-turma-in-curso")
+    public ResponseEntity<Curso> addTurma(@PathVariable Integer cursoId, @RequestBody TurmaRequestDTO dto){
+        Curso curso = this.cursoRepository.findById(cursoId)
                 .orElseThrow(() -> new IllegalArgumentException("Curso não encontrado"));
 
         Turma turma = new Turma();
