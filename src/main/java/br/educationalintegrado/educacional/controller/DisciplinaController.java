@@ -41,19 +41,9 @@ public class DisciplinaController {
         return ResponseEntity.ok(disciplina);
     }
 
-    @PostMapping
-    public ResponseEntity<Disciplina> save(@RequestBody DisciplinaRequestDTO dto){
-        Disciplina disciplina = new Disciplina();
-
-        disciplina.setNome(dto.nome());
-        disciplina.setCodigo(dto.codigo());
-
-        return ResponseEntity.ok(this.repository.save(disciplina));
-    }
-
 //    , Integer cursoId, Integer professorId
     @PostMapping("/{cursoId}/add-disciplina-in-curso")
-    public ResponseEntity<Curso> addCurso(@PathVariable Integer cursoId, @RequestBody DisciplinaRequestDTO dto, Integer professorId){
+    public ResponseEntity<Curso> addDisciplina(@PathVariable Integer cursoId, @RequestBody DisciplinaRequestDTO dto, Integer professorId){
 
         Curso curso = this.cursoRepository.findById(cursoId)
                 .orElseThrow(() -> new IllegalArgumentException("Curso não encontrado"));
