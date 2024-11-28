@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 
 @RestController
@@ -62,6 +64,11 @@ public class AlunoController {
                                                   @PathVariable Integer turmaId){
         Aluno aluno = this.repository.findById(alunoId)
                 .orElseThrow(() -> new IllegalArgumentException("Aluno não encontrado"));
+
+        int idadeAluno = Period.between(aluno.getData_nascimento(), LocalDate.now()).getYears();
+        if (idadeAluno < 18) {
+            return ResponseEntity.ok(this.matriculaRepository.save(null));
+        }
 
         Turma turma = this.turmaRepository.findById(turmaId)
                 .orElseThrow(() -> new IllegalArgumentException("Turma não encontrada"));
