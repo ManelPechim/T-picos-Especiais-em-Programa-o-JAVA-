@@ -21,6 +21,10 @@ public class Matricula {
     @JoinColumn(name = "turma_id", referencedColumnName = "id")
     private Turma turma;
 
+    @OneToMany(mappedBy = "matricula")
+    @JsonIgnoreProperties({"matricula"})
+    private List<Nota> notas;
+
     public Integer getId() {
         return id;
     }
@@ -45,4 +49,11 @@ public class Matricula {
         this.turma = turma;
     }
 
+    public List<Nota> getNotas() {
+        return notas;
+    }
+
+    public void setNotas(List<Nota> notas) {
+        this.notas = notas;
+    }
 }

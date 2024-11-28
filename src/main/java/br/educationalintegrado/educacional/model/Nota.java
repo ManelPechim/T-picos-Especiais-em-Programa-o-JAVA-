@@ -26,6 +26,7 @@ public class Nota {
 
     @ManyToOne
     @JoinColumn(name = "disciplina_id", referencedColumnName = "id")
+    @JsonIgnoreProperties({"curso", "professor"})
     private Disciplina disciplina;
 
     public Integer getId() {

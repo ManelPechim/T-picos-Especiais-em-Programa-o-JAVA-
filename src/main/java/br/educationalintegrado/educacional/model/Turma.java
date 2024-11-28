@@ -21,6 +21,7 @@ public class Turma {
 
     @ManyToOne
     @JoinColumn(name = "curso_id", referencedColumnName = "id")
+    @JsonIgnoreProperties("turmas")
     private Curso curso;
 
     public Integer getId() {

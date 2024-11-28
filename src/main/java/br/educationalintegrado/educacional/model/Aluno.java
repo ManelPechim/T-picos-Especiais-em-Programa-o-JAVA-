@@ -27,7 +27,7 @@ public class Aluno {
     private LocalDate data_nascimento;
 
     @OneToMany(mappedBy = "aluno")
-    @JsonIgnoreProperties("aluno")
+    @JsonIgnoreProperties({"aluno", "cursos", "matriculas"})
     private List<Matricula> matricula;
 
     public Integer getId() {
@@ -77,4 +77,5 @@ public class Aluno {
     public void setMatriculas(List<Matricula> matriculas) {
         this.matricula = matriculas;
     }
+
 }

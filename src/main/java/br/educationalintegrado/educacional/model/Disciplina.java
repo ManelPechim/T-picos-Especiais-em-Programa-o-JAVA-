@@ -1,6 +1,8 @@
 package br.educationalintegrado.educacional.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -21,16 +23,17 @@ public class Disciplina {
 
     @ManyToOne
     @JoinColumn(name = "curso_id", referencedColumnName = "id")
+    @JsonIgnoreProperties("disciplinas")
     private Curso curso;
 
     @ManyToOne
     @JoinColumn(name = "professor_id", referencedColumnName = "id")
+    @JsonIgnoreProperties("disciplinas")
     private Professor professor;
 
-
-    @OneToMany(mappedBy = "disciplina")
-    @JsonIgnoreProperties({"disciplina", "matricula"})
-    private List<Nota> nota;
+//    @OneToMany(mappedBy = "disciplina")
+//    @JsonIgnoreProperties({"matricula", "disciplina"})
+//    private List<Nota> notas;
 
     public Integer getId() {
         return id;
@@ -72,11 +75,11 @@ public class Disciplina {
         this.professor = professor;
     }
 
-    public List<Nota> getNota() {
-        return nota;
-    }
-
-    public void setNota(List<Nota> nota) {
-        this.nota = nota;
-    }
+//    public List<Nota> getNotas() {
+//        return notas;
+//    }
+//
+//    public void setNotas(List<Nota> notas) {
+//        this.notas = notas;
+//    }
 }

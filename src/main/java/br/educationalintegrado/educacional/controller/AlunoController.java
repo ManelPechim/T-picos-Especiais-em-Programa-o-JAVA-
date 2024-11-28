@@ -109,6 +109,26 @@ public class AlunoController {
         return ResponseEntity.ok(this.repository.save(aluno));
     }
 
+    @PutMapping("/{id}-update-nota")
+    public ResponseEntity<Nota> updateNota(@PathVariable Integer id, @RequestBody NotaRequestDTO dto){
+        Nota nota = this.notaRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Nota não encontrada"));
+
+        nota.setNota(dto.nota());
+        nota.setDataLancamento(dto.dataLancamento());
+
+        return ResponseEntity.ok(this.notaRepository.save(nota));
+    }
+
+    @DeleteMapping("/{id}-delete-nota")
+    public ResponseEntity<Void> deleteNota(@PathVariable Integer id){
+        Nota nota = this.notaRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Nota não encontrada"));
+
+        this.notaRepository.delete(nota);
+        return ResponseEntity.noContent().build();
+    }
+
 @DeleteMapping("/{id}")
 public ResponseEntity<Void> delete(@PathVariable Integer id){
     Aluno aluno = this.repository.findById(id)
